@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatBot - Gemini API</title>
+
+  <style>
+    @media screen {
+      body {
+        margin: 0;
+        background-image: url("h.jpg");
+        background-size: cover;
+        font-family: "Segoe UI", sans-serif;
+      }
+
+      .chat-container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .header h1 {
+        color: #cbf6db;
+        font-size: 70px;
+        text-align: center;
+      }
+
+      .suggestion {
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 20px;
+        height: 150px;
+        width: 300px;
+        font-size: 22px;
+        font-weight: 700;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .suggestion:hover {
+        background-color: #ffe9ef;
+        transform: scale(1.05);
+      }
+
+      .chat-body {
+        height: 680px;
+        width: 60%;
+        margin: 30px auto 5px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 20px;
+        overflow-y: auto;
+      }
+
+      .message {
+        margin: 10px 0;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 70%;
+        word-wrap: break-word;
+      }
+
+      .message.user {
+        background-color: #f5f0e1;
+        color: black;
+        align-self: flex-end;
+        margin-left: auto;
+      }
+
+      .message.bot {
+        background-color: whitesmoke;
+        color: black;
+        align-self: flex-start;
+      }
+
+      /* ===== FOOTER ===== */
+      .chat-footer {
+        width: 60%;
+        margin: 0 auto 0px auto;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chat-footer input {
+        flex: 1;
+        padding: 12px;
+        font-size: 18px;
+        border-radius: 20px;
+        border: 3px solid #aed6dc;
+        outline: none;
+      }
+
+      /* Common button style */
+      .chat-footer button {
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      /* ✅ Interactive Delete Button */
+      #deleteBtn {
+        background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        color: white;
+        box-shadow: 0 4px 10px rgba(255, 65, 108, 0.4);
+      }
+
+      #deleteBtn:hover {
+        background: linear-gradient(135deg, #ff6a3d, #ff416c);
+        /* transform: rotate(-10deg) scale(1.1); */
+        box-shadow: 0 6px 14px rgba(255, 65, 108, 0.6);
+      }
+
+      /* Tooltip for delete */
+      #deleteBtn::after {
+        content: "Delete Chat";
+        position: absolute;
+        bottom: 65px;
+        background: #ff416c;
+        color: #fff;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        opacity: 0;
+        pointer-events: none;
+        /* transition: opacity 0.3s; */
+      }
+
+      #deleteBtn:hover::after {
+        opacity: 1;
+      }
+
+      /* Send Button */
+      #sendBtn {
+        background-color: #ed3572;
+        color: white;
+      }
+
+      #sendBtn:hover {
+        background-color: #d42f67;
+        /* transform: scale(1.1); */
+        box-shadow: 0 6px 14px rgba(212, 47, 103, 0.6);
+      }
+
+      /* Other Styles */
+      /* .hidden-content {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 10px;
+        transition: max-height 0.5s ease, padding 0.5s ease;
+      }
+
+      #toggle {
+        display: none;
+      }
+
+      .toggle-label {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 35px;
+        user-select: none;
+        position: fixed;
+      }
+
+      .toggle-label::after {
+        content: "☰  Menu";
+        color: #d42f67;
+        transition: transform 0.3s;
+        height: 200px;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+      }
+
+      #toggle:checked + .toggle-label::after {
+        content: "☰  Menu";
+        height: 200px;
+        position: fixed;
+        left: 2px;
+      }C:\Users\V\Downloads\MY Projects\chatbot\node_modules\@google\generative-ai\dist\src\requests
+
+      #toggle:checked ~ .hidden-content {
+        max-height: 300px;
+        background-color: #ccc;
+        padding: 10px;
+      }
+
+      .hide {
+        position: fixed;
+        top: 5px;
+        right: 1360px;
+      } */
+
+      b {
+        color: black;
+        font-size: 25px;
+      }
+
+      p {
+        color: black;
+        font-size: 20px;
+      }
+
+      a {
+        font-size: 20px;
+        text-decoration: none;
+        color: black;
+      }
+
+      li {
+        height: 200px;
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chat-container">
+    <div class="header">
+      <h1 style="margin-top: 5px;"><i>Informer</i></h1>
+      <div id="b1" class="suggestion">How can I develop English communication skills?</div>
+      <div id="b2" class="suggestion">Which is the best programming language to learn?</div>
+      <div id="b3" class="suggestion">Suggest some best internships for my skill development.</div>
+    </div>
+
+    <div class="chat-body" id="chatBody"></div>
+
+    <!-- ✅ Updated Footer -->
+    <div class="chat-footer">
+      <button id="deleteBtn" onclick="send()" title="Delete Chat">🗑️</button>
+      <input type="text" id="userInput" placeholder="Message ChatBot">
+      <button id="sendBtn" onclick="generateContent()" title="Send Message">➤</button>
+    </div>
+  </div>
+  <script>
+    // Enter key support
+    document.getElementById("userInput").addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("sendBtn").click();
+      }
+    });
+
+    function send() {
+      chatHistory = [];
+      localStorage.removeItem("chatHistory");
+      chatHistory.push({
+        role: "bot",
+        text: "👋 Hi! I’m your ChatBot. How can I assist you today?"
+      });
+      displayChat();
+    }
+  </script>
+
+  <script src="fetch.js"></script>
+</body>
+</html>
