@@ -1,21 +1,20 @@
-// ✅ Import dependencies
 import express from "express";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// ✅ Load environment variables from .env
 dotenv.config();
-
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// ✅ Allow frontend (HTML/JS) access
+// Middleware
 app.use(cors());
-
-// ✅ Parse JSON requests
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "src")));
 
-// ✅ Optional: Fix Content Security Policy (removes Chrome warnings)
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
@@ -24,16 +23,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ API key and Gemini endpoint
 const API_KEY = process.env.API_KEY;
 if (!API_KEY) {
-  console.error("❌ ERROR: Missing API_KEY in .env file!");
+  console.error("ERROR: Missing API_KEY in .env file!");
   process.exit(1);
 }
 
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${API_KEY}`;
 
-// ✅ Handle POST requests from frontend
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "src", "api.html"));
+});
 app.post("/generate", async (req, res) => {
   try {
     const response = await fetch(ENDPOINT, {
@@ -42,7 +42,6 @@ app.post("/generate", async (req, res) => {
       body: JSON.stringify(req.body),
     });
 
-    // Handle API errors
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Gemini API Error:", errorText);
@@ -58,13 +57,8 @@ app.post("/generate", async (req, res) => {
     res.status(500).json({ error: "Failed to connect to Gemini API." });
   }
 });
-app.get("/", (req, res) => {
-  res.send("✅ Chatbot backend is running! Use POST /generate for AI responses.");
-});
 
-
-// ✅ Start server
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running safely at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

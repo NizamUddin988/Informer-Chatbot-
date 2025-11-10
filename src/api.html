@@ -56,7 +56,7 @@
         transform: scale(1.05);
       }
 
-      .chat-body {
+      .chatbody {
         height: 680px;
         width: 60%;
         margin: 30px auto 5px;
@@ -86,8 +86,6 @@
         color: black;
         align-self: flex-start;
       }
-
-      /* ===== FOOTER ===== */
       .chat-footer {
         width: 60%;
         margin: 0 auto 0px auto;
@@ -105,8 +103,6 @@
         border: 3px solid #aed6dc;
         outline: none;
       }
-
-      /* Common button style */
       .chat-footer button {
         border: none;
         border-radius: 50%;
@@ -119,8 +115,6 @@
         justify-content: center;
         transition: all 0.3s ease;
       }
-
-      /* ✅ Interactive Delete Button */
       #deleteBtn {
         background: linear-gradient(135deg, #ff4b2b, #ff416c);
         color: white;
@@ -132,8 +126,6 @@
         /* transform: rotate(-10deg) scale(1.1); */
         box-shadow: 0 6px 14px rgba(255, 65, 108, 0.6);
       }
-
-      /* Tooltip for delete */
       #deleteBtn::after {
         content: "Delete Chat";
         position: absolute;
@@ -151,8 +143,6 @@
       #deleteBtn:hover::after {
         opacity: 1;
       }
-
-      /* Send Button */
       #sendBtn {
         background-color: #ed3572;
         color: white;
@@ -163,58 +153,6 @@
         /* transform: scale(1.1); */
         box-shadow: 0 6px 14px rgba(212, 47, 103, 0.6);
       }
-
-      /* Other Styles */
-      /* .hidden-content {
-        max-height: 0;
-        overflow: hidden;
-        padding: 0 10px;
-        transition: max-height 0.5s ease, padding 0.5s ease;
-      }
-
-      #toggle {
-        display: none;
-      }
-
-      .toggle-label {
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 35px;
-        user-select: none;
-        position: fixed;
-      }
-
-      .toggle-label::after {
-        content: "☰  Menu";
-        color: #d42f67;
-        transition: transform 0.3s;
-        height: 200px;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-      }
-
-      #toggle:checked + .toggle-label::after {
-        content: "☰  Menu";
-        height: 200px;
-        position: fixed;
-        left: 2px;
-      }C:\Users\V\Downloads\MY Projects\chatbot\node_modules\@google\generative-ai\dist\src\requests
-
-      #toggle:checked ~ .hidden-content {
-        max-height: 300px;
-        background-color: #ccc;
-        padding: 10px;
-      }
-
-      .hide {
-        position: fixed;
-        top: 5px;
-        right: 1360px;
-      } */
-
       b {
         color: black;
         font-size: 25px;
@@ -251,15 +189,16 @@
       <div id="b3" class="suggestion">Suggest some best internships for my skill development.</div>
     </div>
 
-    <div class="chat-body" id="chatBody"></div>
+    <div class="chatbody" id="chatBody"></div>
 
-    <!-- ✅ Updated Footer -->
+    <!-- Footer -->
     <div class="chat-footer">
       <button id="deleteBtn" onclick="send()" title="Delete Chat">🗑️</button>
       <input type="text" id="userInput" placeholder="Message ChatBot">
       <button id="sendBtn" onclick="generateContent()" title="Send Message">➤</button>
     </div>
   </div>
+   <script src="fetch.js"></script>
   <script>
     // Enter key support
     document.getElementById("userInput").addEventListener("keypress", function (event) {
@@ -268,18 +207,16 @@
         document.getElementById("sendBtn").click();
       }
     });
-
+    // default bot message
     function send() {
       chatHistory = [];
       localStorage.removeItem("chatHistory");
       chatHistory.push({
         role: "bot",
-        text: "👋 Hi! I’m your ChatBot. How can I assist you today?"
+        text: "Hi! I’m your ChatBot. How can I assist you today?"
       });
       displayChat();
     }
   </script>
-
-  <script src="fetch.js"></script>
 </body>
 </html>

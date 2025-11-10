@@ -1,5 +1,5 @@
-let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || [];
 
+let chatHistory = JSON.parse(localStorage.getItem("chatHistory")) || [];
 function displayChat() {
   const chatBody = document.getElementById("chatBody");
   chatBody.innerHTML = "";
@@ -18,14 +18,11 @@ async function generateContent() {
   const userInput = document.getElementById("userInput");
   const prompt = userInput.value.trim();
   if (!prompt) return;
-
   userInput.value = "";
   userInput.disabled = true;
   document.getElementById("sendBtn").disabled = true;
-
   chatHistory.push({ role: "user", text: prompt });
   displayChat();
-
   const typingIndicator = document.createElement("div");
   typingIndicator.classList.add("typing-indicator");
   typingIndicator.innerHTML = `
@@ -62,7 +59,7 @@ async function generateContent() {
   } catch (err) {
     console.error(err);
     typingIndicator.remove();
-    chatHistory.push({ role: "bot", text: "⚠️ Something went wrong. Try again." });
+    chatHistory.push({ role: "bot", text: "Something went wrong,Try again." });
     displayChat();
   } finally {
     userInput.disabled = false;
@@ -75,7 +72,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (chatHistory.length === 0) {
     chatHistory.push({
       role: "bot",
-      text: "👋 Hi! I'm your AI ChatBot. How can I assist you today?"
+      text: "Hi! I'm your AI ChatBot. How can I assist you today?"
     });
     localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
   }
