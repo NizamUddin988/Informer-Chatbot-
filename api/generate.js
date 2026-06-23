@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: "Missing API_KEY environment variable" });
   }
 
-  const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const ENDPOINT =`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
   try {
     const response = await fetch(ENDPOINT, {
